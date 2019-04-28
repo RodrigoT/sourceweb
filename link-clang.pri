@@ -13,7 +13,7 @@ QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter -Wno-strict-aliasing
 win32: QMAKE_CXXFLAGS_WARN_ON += -Wno-enum-compare
 DEFINES += _GNU_SOURCE __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS __STDC_LIMIT_MACROS
 
-LIBS += -L$${CLANG_DIR}/lib
+LIBS += -L$${CLANG_DIR}/lib64
 for(CLANG_LIB, CLANG_LIBS) {
     LIBS += -l$${CLANG_LIB}
 }

@@ -503,6 +503,10 @@ SourceWidgetView::SourceWidgetView(
     setMouseTracking(true);
     setAttribute(Qt::WA_Hover);
     updateFindMatches();
+    tabPanel = new QTabWidget;
+    tabPanel->setMovable(true);
+    tabPanel->setTabsClosable(true);
+    connect(tabPanel, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab_(int)));
 }
 
 // Declare out-of-line destructor where member std::unique_ptr's types are
@@ -1253,14 +1257,34 @@ FileRange SourceWidgetView::matchFileRange(int index)
     }
 }
 
-void SourceWidgetView::actionCrossReferences()
+void SourceWidgetView::closeTab_(int index)
 {
+// Remove the tab using removeTab(). Be aware that the
+// page widget itself is not deleted!
+    //tabPanel->removeTab(index);
+
+    // OR (do NOT do both)
+
+    // Delete the page widget, which automatically removes
+    // the tab as well.
+    delete tabPanel->widget(index);
+    if (tabPanel->count() == 0)
+        tabPanel->hide();
+}
+
+void SourceWidgetView::actionCrossReferences()
+{ // highlighted symbol cross reference
+    ///-------------------------------
     QAction *action = qobject_cast<QAction*>(sender());
     QString symbol = action->data().toString();
-    TableReportWindow *tw = new TableReportWindow;
+    TableReportWindow *tw = new TableReportWindow(tabPanel);
     ReportRefList *r = new ReportRefList(*theProject, symbol, tw);
     tw->setTableReport(r);
-    tw->show();
+    //tw->show();
+    ///-------------------------------
+    int idx = tabPanel->addTab(tw, symbol);
+    tabPanel->setCurrentIndex(idx);
+    tabPanel->show();
 }
 
 

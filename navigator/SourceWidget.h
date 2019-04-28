@@ -28,6 +28,7 @@
 #include "RegexMatchList.h"
 #include "StringRef.h"
 
+class QTabWidget;
 namespace Nav {
 
 class File;
@@ -296,6 +297,7 @@ private:
 
 private slots:
     void actionCrossReferences();
+    void closeTab_(int index);
 
 private:
     SourceWidgetTextPalette m_textPalette;
@@ -317,6 +319,7 @@ private:
     RegexMatchList m_findMatches;
     int m_selectedMatchIndex;
     int m_tabStopSize;  // measured in columns, not pixels
+    QTabWidget *tabPanel;
 };
 
 

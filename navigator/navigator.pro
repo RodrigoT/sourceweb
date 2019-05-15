@@ -26,6 +26,7 @@ SOURCES += \
     ReportFileList.cc \
     ReportRefList.cc \
     ReportSymList.cc \
+    ReportWindowFactory.cc \
     SourceWidget.cc \
     TableReport.cc \
     TableReportView.cc \
@@ -58,6 +59,7 @@ HEADERS += \
     ReportFileList.h \
     ReportRefList.h \
     ReportSymList.h \
+    ReportWindowFactory.h \
     SourceWidget.h \
     StringRef.h \
     TableReport.h \

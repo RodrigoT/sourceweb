@@ -45,6 +45,7 @@
 #include "Regex.h"
 #include "RegexMatchList.h"
 #include "ReportRefList.h"
+#include "ReportWindowFactory.h"
 #include "StringRef.h"
 #include "TableReportWindow.h"
 #include "MainWindow.h"
@@ -488,11 +489,13 @@ SourceWidgetTextPalette::Color SourceWidgetTextPalette::registerColor(
 SourceWidgetView::SourceWidgetView(
         const QMargins &margins,
         Project &project,
+        ReportWindowFactory& reportFactory,
         QWidget *parent) :
     QWidget(parent),
     m_textPalette(project),
     m_margins(margins),
     m_project(project),
+    m_reportFactory(reportFactory),
     m_file(NULL),
     m_mouseHoveringInWidget(false),
     m_selectingMode(SM_Inactive),
@@ -1277,21 +1280,22 @@ void SourceWidgetView::actionCrossReferences()
     ///-------------------------------
     QAction *action = qobject_cast<QAction*>(sender());
     QString symbol = action->data().toString();
-    TableReportWindow *tw = new TableReportWindow(tabPanel);
+    /*TableReportWindow *tw = new TableReportWindow(tabPanel);
     ReportRefList *r = new ReportRefList(*theProject, symbol, tw);
     tw->setTableReport(r);
     //tw->show();
     ///-------------------------------
     int idx = tabPanel->addTab(tw, symbol);
     tabPanel->setCurrentIndex(idx);
-    tabPanel->show();
+    tabPanel->show();*/
+    m_reportFactory.openWindow(ReportWindowFactory::WindowType::SymbolResult, symbol);
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // SourceWidget
 
-SourceWidget::SourceWidget(Project &project, QWidget *parent) :
+SourceWidget::SourceWidget(Project &project, ReportWindowFactory& reportFactory, QWidget *parent) :
     QAbstractScrollArea(parent),
     m_project(project),
     m_findStartOffset(0)
@@ -1302,7 +1306,7 @@ SourceWidget::SourceWidget(Project &project, QWidget *parent) :
     assert(m_macScrollOptimizationHack->size() == QSize(0, 0));
 #endif
 
-    m_view = new SourceWidgetView(QMargins(4, 4, 4, 4), project, viewport());
+    m_view = new SourceWidgetView(QMargins(4, 4, 4, 4), project, reportFactory, viewport());
     setBackgroundRole(QPalette::Base);
     m_lineArea = new SourceWidgetLineArea(QMargins(4, 4, 4, 4), this);
 

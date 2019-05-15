@@ -34,6 +34,7 @@ namespace Nav {
 class File;
 class Project;
 class Ref;
+class ReportWindowFactory;
 class SourceWidget;
 class SourceWidgetLineArea;
 
@@ -229,6 +230,7 @@ public:
     SourceWidgetView(
             const QMargins &margins,
             Project &project,
+            ReportWindowFactory& reportFactory,
             QWidget *parent = 0);
     virtual ~SourceWidgetView();
     void setViewportOrigin(QPoint pt);
@@ -304,6 +306,7 @@ private:
     QPoint m_viewportOrigin;
     QMargins m_margins;
     Project &m_project;
+    ReportWindowFactory &m_reportFactory;
     File *m_file;
     std::unique_ptr<SourceWidgetTextPalette::Color[]> m_syntaxColoring;
     int m_maxLineLength;
@@ -330,7 +333,7 @@ class SourceWidget : public QAbstractScrollArea
 {
     Q_OBJECT
 public:
-    explicit SourceWidget(Project &project, QWidget *parent = 0);
+    explicit SourceWidget(Project &project, ReportWindowFactory& reportFactory, QWidget *parent = 0);
     void setFile(File *file);
     File *file() { return sourceWidgetView().file(); }
     void selectIdentifier(

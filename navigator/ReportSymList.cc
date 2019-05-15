@@ -8,14 +8,16 @@
 
 #include "Project.h"
 #include "ReportRefList.h"
+#include "ReportWindowFactory.h"
 #include "TableReport.h"
 #include "TableReportWindow.h"
 
 namespace Nav {
 
-ReportSymList::ReportSymList(Project &project, QObject *parent) :
+ReportSymList::ReportSymList(Project &project, ReportWindowFactory& reportFactory, QObject *parent) :
     TableReport(parent),
-    m_project(project)
+    m_project(project),
+    m_reportFactory(reportFactory)
 {
 }
 
@@ -62,12 +64,13 @@ int ReportSymList::compare(int row1, int row2, int col)
 
 bool ReportSymList::activate(int row)
 {
-    TableReportWindow *tw = new TableReportWindow;
+    /*TableReportWindow *tw = new TableReportWindow;
     tw->setTableReport(new ReportRefList(
                            m_project,
                            m_project.symbolStringTable().item(row),
                            tw));
-    tw->show();
+    tw->show();*/
+    m_reportFactory.openWindow(ReportWindowFactory::WindowType::SymbolResult, m_project.symbolStringTable().item(row));
     return false;
 }
 

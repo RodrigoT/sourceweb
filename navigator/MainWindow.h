@@ -1,6 +1,7 @@
 #ifndef NAV_MAINWINDOW_H
 #define NAV_MAINWINDOW_H
 
+#include <memory>
 #include <QFontMetricsF>
 #include <QMainWindow>
 #include <QMap>
@@ -12,9 +13,8 @@
 #include "TextWidthCalculator.h"
 
 namespace Nav {
-
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
 class File;
@@ -23,6 +23,7 @@ class FolderWidget;
 class MainWindow;
 class Project;
 class Ref;
+class ReportWindowFactory;
 class SourceWidget;
 
 extern MainWindow *theMainWindow;
@@ -66,6 +67,7 @@ private:
     FolderWidget *m_folderWidget;
     SourceWidget *m_sourceWidget;
     FindBar *m_findBar;
+    std::unique_ptr<ReportWindowFactory> m_windowFactory;
 };
 
 } // namespace Nav

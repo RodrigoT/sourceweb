@@ -12,6 +12,7 @@
 namespace Nav {
 
 class Project;
+class ReportWindowFactory;
 
 const QSize kReportSymListDefaultSize(600, 800);
 
@@ -19,7 +20,7 @@ class ReportSymList : public TableReport
 {
     Q_OBJECT
 public:
-    explicit ReportSymList(Project &project, QObject *parent = NULL);
+    explicit ReportSymList(Project &project, ReportWindowFactory& reportFactory, QObject *parent = NULL);
     QString title();
     QStringList columns();
     int rowCount();
@@ -29,6 +30,7 @@ public:
 
 private:
     Project &m_project;
+    ReportWindowFactory &m_reportFactory;
 };
 
 } // namespace Nav

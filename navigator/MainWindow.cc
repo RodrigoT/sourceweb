@@ -31,6 +31,7 @@
 #include "ReportFileList.h"
 #include "ReportRefList.h"
 #include "ReportSymList.h"
+#include "ReportWindowFactory.h"
 #include "SourceWidget.h"
 #include "TableReport.h"
 #include "TableReportWindow.h"
@@ -41,11 +42,13 @@ namespace Nav {
 const int kDefaultSideBarSizePx = 300;
 const Qt::FocusPolicy kDefaultSourceWidgetFocusPolicy = Qt::WheelFocus;
 
+
 MainWindow *theMainWindow;
 
 MainWindow::MainWindow(Project &project, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
+    , m_windowFactory(new ReportWindowFactory)
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
@@ -64,7 +67,7 @@ MainWindow::MainWindow(Project &project, QWidget *parent) :
         QVBoxLayout *sourcePaneLayout = new QVBoxLayout(sourcePane);
         sourcePaneLayout->setMargin(0);
         sourcePaneLayout->setSpacing(0);
-        m_sourceWidget = new SourceWidget(project);
+        m_sourceWidget = new SourceWidget(project, *m_windowFactory);
         m_sourceWidget->setFocusPolicy(kDefaultSourceWidgetFocusPolicy);
         sourcePaneLayout->addWidget(m_sourceWidget);
         sourcePaneLayout->addWidget(m_findBar);
@@ -225,31 +228,34 @@ void MainWindow::updateFindBarInfo()
 
 void MainWindow::on_actionBrowseFiles_triggered()
 {
-    TableReportWindow *tw = new TableReportWindow;
+    /*TableReportWindow *tw = new TableReportWindow;
     ReportFileList *r = new ReportFileList(*theProject, tw);
     tw->setTableReport(r);
     tw->setFilterBoxVisible(true);
-    tw->show();
+    tw->show();*/
+    m_windowFactory->openWindow(ReportWindowFactory::WindowType::Files, "");
 }
 
 void MainWindow::on_actionBrowseGlobalDefinitions_triggered()
 {
-    TableReportWindow *tw = new TableReportWindow;
+    /*TableReportWindow *tw = new TableReportWindow;
     ReportDefList *r = new ReportDefList(*theProject, tw);
     tw->setTableReport(r);
     tw->setFilterBoxVisible(true);
     tw->resize(kReportDefListDefaultSize);
-    tw->show();
+    tw->show();*/
+    m_windowFactory->openWindow(ReportWindowFactory::WindowType::GlobalDefinitions, "");
 }
 
 void MainWindow::on_actionBrowseSymbols_triggered()
 {
-    TableReportWindow *tw = new TableReportWindow;
+    /*TableReportWindow *tw = new TableReportWindow;
     ReportSymList *r = new ReportSymList(*theProject, tw);
     tw->setTableReport(r);
     tw->setFilterBoxVisible(true);
     tw->resize(kReportSymListDefaultSize);
-    tw->show();
+    tw->show();*/
+    m_windowFactory->openWindow(ReportWindowFactory::WindowType::SymbolSearch, "");
 }
 
 void MainWindow::actionBack()

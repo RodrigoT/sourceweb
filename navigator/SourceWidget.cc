@@ -1280,14 +1280,6 @@ void SourceWidgetView::actionCrossReferences()
     ///-------------------------------
     QAction *action = qobject_cast<QAction*>(sender());
     QString symbol = action->data().toString();
-    /*TableReportWindow *tw = new TableReportWindow(tabPanel);
-    ReportRefList *r = new ReportRefList(*theProject, symbol, tw);
-    tw->setTableReport(r);
-    //tw->show();
-    ///-------------------------------
-    int idx = tabPanel->addTab(tw, symbol);
-    tabPanel->setCurrentIndex(idx);
-    tabPanel->show();*/
     m_reportFactory.openWindow(ReportWindowFactory::WindowType::SymbolResult, symbol);
 }
 

@@ -64,12 +64,6 @@ int ReportSymList::compare(int row1, int row2, int col)
 
 bool ReportSymList::activate(int row)
 {
-    /*TableReportWindow *tw = new TableReportWindow;
-    tw->setTableReport(new ReportRefList(
-                           m_project,
-                           m_project.symbolStringTable().item(row),
-                           tw));
-    tw->show();*/
     m_reportFactory.openWindow(ReportWindowFactory::WindowType::SymbolResult, m_project.symbolStringTable().item(row));
     return false;
 }

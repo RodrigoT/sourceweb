@@ -228,33 +228,16 @@ void MainWindow::updateFindBarInfo()
 
 void MainWindow::on_actionBrowseFiles_triggered()
 {
-    /*TableReportWindow *tw = new TableReportWindow;
-    ReportFileList *r = new ReportFileList(*theProject, tw);
-    tw->setTableReport(r);
-    tw->setFilterBoxVisible(true);
-    tw->show();*/
     m_windowFactory->openWindow(ReportWindowFactory::WindowType::Files, "");
 }
 
 void MainWindow::on_actionBrowseGlobalDefinitions_triggered()
 {
-    /*TableReportWindow *tw = new TableReportWindow;
-    ReportDefList *r = new ReportDefList(*theProject, tw);
-    tw->setTableReport(r);
-    tw->setFilterBoxVisible(true);
-    tw->resize(kReportDefListDefaultSize);
-    tw->show();*/
     m_windowFactory->openWindow(ReportWindowFactory::WindowType::GlobalDefinitions, "");
 }
 
 void MainWindow::on_actionBrowseSymbols_triggered()
 {
-    /*TableReportWindow *tw = new TableReportWindow;
-    ReportSymList *r = new ReportSymList(*theProject, tw);
-    tw->setTableReport(r);
-    tw->setFilterBoxVisible(true);
-    tw->resize(kReportSymListDefaultSize);
-    tw->show();*/
     m_windowFactory->openWindow(ReportWindowFactory::WindowType::SymbolSearch, "");
 }
 

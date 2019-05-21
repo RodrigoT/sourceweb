@@ -3,10 +3,14 @@
 
 #include <QString>
 #include <QTabWidget>
+#include <QObject>
 
 namespace Nav {
-class ReportWindowFactory
+class ReportWindowFactory : public QObject
 { // this calss control the behaviour when requesting a new result window
+
+    Q_OBJECT
+
     public:
         enum class WindowPolicy {
             NewWindow, // always new window
@@ -21,6 +25,7 @@ class ReportWindowFactory
             GlobalDefintionResult
         };
         ReportWindowFactory();
+        virtual ~ReportWindowFactory() = default;
         void openWindow(WindowType windowType, const QString &symbolName);
     protected:
         WindowPolicy currentWindowPolicy = WindowPolicy::GroupedWindow;

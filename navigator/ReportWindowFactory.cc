@@ -15,7 +15,13 @@ ReportWindowFactory::ReportWindowFactory()
     {
         tabPanel->setMovable(true);
         tabPanel->setTabsClosable(true);
-        //connect(tabPanel, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab_(int))); // TODO
+        QObject::connect(tabPanel, &QTabWidget::tabCloseRequested, this, [tabPanel, this](int index){
+                // Delete the page widget, which automatically removes
+                // the tab as well.
+                delete tabPanel->widget(index);
+                if (tabPanel->count() == 0)
+                    tabPanel->hide();
+                });
     }
 }
 

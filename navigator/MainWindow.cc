@@ -228,17 +228,17 @@ void MainWindow::updateFindBarInfo()
 
 void MainWindow::on_actionBrowseFiles_triggered()
 {
-    m_windowFactory->openWindow(ReportWindowFactory::WindowType::Files, "");
+    m_windowFactory->openWindow(ReportWindowFactory::WindowType::Files, "Files");
 }
 
 void MainWindow::on_actionBrowseGlobalDefinitions_triggered()
 {
-    m_windowFactory->openWindow(ReportWindowFactory::WindowType::GlobalDefinitions, "");
+    m_windowFactory->openWindow(ReportWindowFactory::WindowType::GlobalDefinitions, "Globals");
 }
 
 void MainWindow::on_actionBrowseSymbols_triggered()
 {
-    m_windowFactory->openWindow(ReportWindowFactory::WindowType::SymbolSearch, "");
+    m_windowFactory->openWindow(ReportWindowFactory::WindowType::SymbolSearch, "Symbols");
 }
 
 void MainWindow::actionBack()

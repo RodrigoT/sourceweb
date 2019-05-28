@@ -32,7 +32,7 @@ private:
                                     const clang::FileEntry *file,
                                     llvm::StringRef searchPath,
                                     llvm::StringRef relativePath,
-                                    const clang::Module *imported) override;
+                                    const clang::Module *imported);
 
     std::tuple<IndexerFileContext*, Location, Location>
     getIncludeFilenameLoc(clang::CharSourceRange filenameRange);

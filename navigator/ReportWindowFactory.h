@@ -28,7 +28,7 @@ class ReportWindowFactory : public QObject
         virtual ~ReportWindowFactory() = default;
         void openWindow(WindowType windowType, const QString &symbolName);
     protected:
-        WindowPolicy currentWindowPolicy = WindowPolicy::GroupedWindow;
+        WindowPolicy currentWindowPolicy = WindowPolicy::SingleWindow;
         QTabWidget singleWindow;
         QTabWidget groupFiles;
         QTabWidget groupSymbols;

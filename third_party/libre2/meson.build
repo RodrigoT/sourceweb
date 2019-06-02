@@ -38,5 +38,5 @@ src_re2 = [
     'util/valgrind.cc'
     ]
 
-libre2 = static_library('re2', src_re2, dependencies: dep_threads, include_directories : inc)
+libre2 = static_library('re2', src_re2, dependencies: dep_threads, include_directories : inc, cpp_args: ['-Wno-misleading-indentation', '-Wno-sign-compare'])
 libre2_dep = declare_dependency(include_directories : inc, link_with : libre2)

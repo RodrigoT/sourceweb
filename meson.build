@@ -66,3 +66,42 @@ src_nav = [
     'navigator/main.cc', 'navigator/Application.cpp']
 executable('nagivator', sources: [src_nav, qtprocessed], dependencies: [qt5widgets, libre2_dep, libidxdb_dep])
 
+src_idxtool = ['index-tool/main.cc']
+executable('sw-index-tool', sources: src_idxtool, dependencies: libidxdb_dep)
+
+llvm_dep = dependency('llvm', version : '>= 6.0')
+llvm_libdir = llvm_dep.get_configtool_variable('libdir')
+dep_clang_names = ['clangFrontend', 'clangSerialization', 'clangDriver', 'clangTooling', 'clangParse', 'clangSema', 'clangAnalysis', 'clangEdit', 'clangAST', 'clangLex', 'clangBasic']
+dep_clang = []
+foreach lclang: dep_clang_names
+    dep_clang += meson.get_compiler('cpp').find_library(lclang, dirs : llvm_libdir)
+endforeach
+#dep_clang_ast = meson.get_compiler('cpp').find_library('clangAST', dirs : llvm_libdir)
+src_clidx = [
+    'clang-indexer/ASTIndexer.cc',
+    'clang-indexer/DaemonPool.cc',
+    'clang-indexer/IndexBuilder.cc',
+    'clang-indexer/IndexerContext.cc',
+    'clang-indexer/IndexerPPCallbacks.cc',
+    'clang-indexer/Mutex.cc',
+    'clang-indexer/NameGenerator.cc',
+    'clang-indexer/Process.cc',
+    'clang-indexer/TUIndexer.cc',
+    'clang-indexer/Util.cc',
+    'clang-indexer/main.cc'
+    ]
+executable('sw-clang-indexer', sources: src_clidx, dependencies: [llvm_dep, qt5widgets, dep_clang, libidxdb_dep])
+
+src_swb = ['btrace/btrace.c']
+if build_machine.system() == 'darwin'
+    src_swb += 'btrace/btrace_darwin.c'
+elif ['dragonfly','freebsd','netbsd'].contains(build_machine.system())
+    src_swb += 'btrace/btrace_freebsd.c'
+elif build_machine.system() == 'linux'
+    src_swb += 'btrace/btrace_linux.c'
+else
+    warning('Unknown OS '+build_machine.system()+': asuming Solaris')
+    src_swb += 'btrace/btrace_solaris.c'
+endif
+shared_library('sw-btrace', sources: src_swb)
+

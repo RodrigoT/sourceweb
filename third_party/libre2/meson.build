@@ -29,7 +29,6 @@ src_re2 = [
     'util/pcre.cc',
     'util/random.cc',
     'util/rune.cc',
-    #    'util/sparse_array_test.cc',
     'util/stringpiece.cc',
     'util/stringprintf.cc',
     'util/strutil.cc',
